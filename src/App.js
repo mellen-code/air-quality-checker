@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import './App.css';
-import CitySearch from './CitySearch';
-import AirQualityCard from './AirQualityCard';
+import CitySearch from './Components/CitySearch';
+import AirQualityCard from './Components/AirQualityCard';
+import PollutantInfo from './Components/PollutantInfo';
+import AirQualityLevelsTable from './Components/AirQualityLevelsTable';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 
 
@@ -32,22 +34,26 @@ function App() {
 
   return (
     <div className='container'>
-    <h1 className='mt-5 mb-3'>Air Quality Index Finder</h1>
-    <CitySearch getAirQuality={getAirQuality} />
+      <h1 className='mt-5 mb-3'>Air Quality Index Finder</h1>
+      <CitySearch getAirQuality={getAirQuality} />
 
-    {/* short circuiting: to do if there's a value in error state variable */}
-    {error && (
-      <div className='alert alert-danger' role='alert'>
-        {error}
-      </div>
-    )}
+      {/* short circuiting: to do if there's a value in error state variable */}
+      {error && (
+        <div className='alert alert-danger' role='alert'>
+          {error}
+        </div>
+      )}
 
-    {/* short circuiting: to do if there's a value in airQualityData state variable */}
-    {airQualityData && (
-      <>
-        <AirQualityCard data={airQualityData} />
-      </>
-    )}
+      {/* short circuiting: to do if there's a value in airQualityData state variable */}
+      {airQualityData && (
+        <>
+          <AirQualityCard data={airQualityData} />
+          <PollutantInfo pollutant={airQualityData.dominentpol} />
+        </>
+      )}
+
+      <AirQualityLevelsTable />
+      <p>Location-specific API data sourced from the <a href="https://aqicn.org/api/">World Air Quality Index Project</a>.</p>
     </div>
   );
 }
